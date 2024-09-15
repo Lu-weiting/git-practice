@@ -21,13 +21,13 @@
 - head：
 > * 指向當前分支最新的commit object
 
-- 紀錄在 git repo 操作過程中，.git 檔案夾裡的變化，看看你可以觀察到什麼
-> * 每當git add檔案的時候，就會產生一個blob物件。這個物件會紀錄檔案的內容（一串編碼組成），不會紀錄檔名
-> * 每當git commit時，就會產生一個tree object，每個不同的commit都會產生不同的tree object，tree object是根據staging area的檔案組成，當查看tree object時可以看到每個blob object的hash外還有檔案名稱
-> * 第一次git commit，產生的commit object不會有parent
+### 紀錄在 git repo 操作過程中，.git 檔案夾裡的變化，看看你可以觀察到什麼
+- 每當git add檔案的時候，就會產生一個blob物件。這個物件會紀錄檔案的內容（一串編碼組成），不會紀錄檔名
+- 每當git commit時，就會產生一個tree object，每個不同的commit都會產生不同的tree object，tree object是根據staging area的檔案組成，當查看tree object時可以看到每個blob object的hash外還有檔案名稱
+- 第一次git commit，產生的commit object不會有parent
 
-- commit message 應該怎麼寫比較好？應該有什麼 `style` 嗎？
+### commit message 應該怎麼寫比較好？應該有什麼 `style` 嗎？
 commit style是為了進一步提升協作溝通以及程式碼維護上的效率，可以讓code reviewer更容易理解你的變更，通常可以分成兩個部分（我都這樣）：
-> * Subject Line: 簡短的描述、概括哪種類型的變更，比如：Fix, Feat, Refactor....
-> * Body: 描述變更的內容(in general)
+- Subject Line: 簡短的描述、概括哪種類型的變更，比如：Fix, Feat, Refactor....
+- Body: 描述變更的內容(in general)
 
