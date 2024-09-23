@@ -17,7 +17,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 source ~/.bashrc 或 source ~/.zshrc
 ```
 > [!NOTE]
-> 當使用nvm安裝腳本時，會自動在shell配置文件添加一些設置，比如ENV等，如下：
+> 當使用nvm安裝腳本時，會自動在shell配置文件添加一些設置，比如ENV等，如下，所以會需要使用source重新載入就不用重開終端了：
 ```bash
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -47,7 +47,7 @@ npm run 執行命令
 > * npm ci: 根據 package-lock.json 完全一致地安裝套件，通常用於生產環境，原因是因為npm install都會偷偷自動更新一些地方，因此就有可能導致某些套件不相容
 
 ### npx
-我們在開發過程往往都會用到一些只需要**暫時**需要的技術，用npm install就有點浪費空間，所以npx的出現就是為了解決這個需求，再加上儘管沒有安裝，npx也可以快速執行命令（借我用一下的概念），像TypeScript建立的系統，真正運行依舊是運行編譯後的JS，所以其實「編譯TS」這個行為就是一次性，因此可以透過npx tsc而不用再永久安裝tsc套件
+我們在開發過程往往都會用到一些只**_暫時_**需要的技術，用npm install就有點浪費空間，所以npx的出現就是為了解決這個需求，再加上儘管沒有安裝，npx也可以快速執行命令（借我用一下的概念xd），因為最近正好在學TS就拿TS舉例：由TypeScript組成的code base，真正運行依舊是運行編譯後的JS，所以其實「編譯TS」這個行為就是一次性，因此可以透過npx tsc而不用再永久安裝tsc套件，特別是在容器化時。
 * 減少全局安裝
 * 快速運行命令而無需提前安裝套件
 
