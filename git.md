@@ -1,3 +1,50 @@
+## Git 是啥怎麼運作的？
+
+### 一個管理檔案系統的系統
+* snapshots of the file system in **time**
+* * File 的組成不只是「內容」還有一些metadata ex: created time，當File從一個資料夾一去另一個資料夾時，Metadata是不變的
+* in Git 所有物件(Blob / Commit / Tree)都是以sha-1 hash來辨識的
+* * 40 characters （16進位）
+
+### 細部觀察Git init：
+* 當初次git init 時，便會生成.git資料夾
+```bash
+(base) waiting@MacBook-Pro-104 .git % ls
+HEAD            info
+config          objects
+description     refs
+hooks
+```
+* 其中objects空的合理，畢竟還沒生成任何檔案，那info, pack是幹嘛的勒？
+```bash
+(base) waiting@MacBook-Pro-104 git-lab2 % find .git/objects
+.git/objects
+.git/objects/info
+.git/objects/pack
+```
+* 當cd進info後，可以看到**exclude**檔案，原本以為這就是.gitignore的運作來源，但居然不是，exclude跟.gitignore是獨立的忽略機制，他們有優先序區分，而優先序是依照 git add指令->.gitignore->exclude
+        - `exclude` 本地層級的忽略規則，只影響當前使用者的開發環境
+        - `.gitignore` 專案層級的忽略規則，所有協作者共享
+因為.gitignore的原則是所有協作者共同**要**忽略的文件，所以有時候當有些本地測試檔案不應該被版本控制或共享給其他人時，就可以透過手動修改exclude檔案來實現
+
+**小實驗**
+* 在沒有.gitignore的情況下，進到.git/info/exclude新增某個檔案，透過git status便能發現確實被忽略(因為進不去暫存區)
+```bash
+(base) waiting@MacBook-Pro-104 git-lab2 % echo "test.txt" >> .git/info/exclude
+```
+```bash
+echo "這是測試檔案" > test.txt
+```
+```bash
+(base) waiting@MacBook-Pro-104 git-lab2 % git status
+
+位於分支 master
+
+尚無提交
+
+無檔案要提交（建立/複製檔案並使用 "git add" 建立追蹤）
+```
+
 ### 說明 blob, tree, commit, branch, head 分別是什麼
 
 - Blob：
@@ -31,3 +78,10 @@ commit style是為了進一步提升協作溝通以及程式碼維護上的效�
 - Subject Line: 簡短的描述、概括哪種類型的變更，比如：Fix, Feat, Refactor....
 - Body: 描述變更的內容(in general)
 
+
+## 一些額外學習到的紀錄
+
+* git cat-file -p ${文件的hash值} -> 印出檔案內容
+* .gitignore 
+        - 如果檔案已被追蹤，即使添加到 .gitignore 中也不會被忽略。可使用 git rm --cached <file> 解決。
+        - 衝突規則：優先應用**最靠近**檔案的規則
