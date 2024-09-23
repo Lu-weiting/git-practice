@@ -2,9 +2,8 @@
 
 ### 一個管理檔案系統的系統
 * snapshots of the file system in **time**
-* * File 的組成不只是「內容」還有一些metadata ex: created time，當File從一個資料夾一去另一個資料夾時，Metadata是不變的
-* in Git 所有物件(Blob / Commit / Tree)都是以sha-1 hash來辨識的
-* * 40 characters （16進位）
+        - File 的組成不只是「內容」還有一些metadata ex: created time，當File從一個資料夾一去另一個資料夾時，Metadata是不變的
+
 
 ### 細部觀察Git init：
 * 當初次git init 時，便會生成.git資料夾
@@ -46,7 +45,8 @@ echo "這是測試檔案" > test.txt
 ```
 
 ### 說明 blob, tree, commit, branch, head 分別是什麼
-
+in Git 所有物件(Blob / Commit / Tree)都是以sha-1 hash來辨識的
+        - 40 characters （16進位）
 - Blob：
 > * Git中的四大物件之一，所有物件都位於.git/objects
 > * 全名是 Binary Large Object，這個物件專門處理的是一個檔案裡的「內容」，透過固定的hash方式（sha1）將內容hash
