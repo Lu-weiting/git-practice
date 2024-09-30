@@ -1,8 +1,30 @@
-## Git 是啥怎麼運作的？
+# Git 是啥怎麼運作的？
 
-### 一個管理檔案系統的系統
-* snapshots of the file system in **time**
-        - File 的組成不只是「內容」還有一些metadata ex: created time，當File從一個資料夾一去另一個資料夾時，Metadata是不變的
+- 一個管理檔案系統的系統 version control system
+- snapshots of the file system in **time**
+
+## version control可以如何實現？
+同樣透過snapshot的概念，當有更改檔案時，產生一個copy檔也就是新的snapshot存起來，就像下圖中的.versions directory一樣，如果要根據某特定版本做更新時，複製特定版本檔案到working directory就好。
+
+> [!NOTE]
+> 但這樣的做法當檔案scope變大、管理成本變高、容易意外更改或複製到錯誤的檔案,so --> Git
+
+
+### How Git stores data?
+第一個byte(前兩字元)用於命名「檔案夾」名稱，剩餘的部分就是檔案內容。
+
+舉例來說：如果想要透過 **c612f8a...** 這個key存某個檔案內容時，Git 就會以**c6**的名稱在.git/objects下創建一個新的資料夾，檔案夾的檔案名稱則就是**12f8a....**
+
+> [!NOTE]
+> 為什麼 Git 用這種方式命名檔案夾建立檔案結構？
+> 避免單一檔案夾下的檔案特別多：
+> * 當檔案夾中檔案數量越多->遍歷檢索效能就差
+> 利用SHA-1的特性均勻分散存放到256個檔案夾之間：
+> * SHA-1 會生成一個 160 bits（20 bytes）的哈希值(40 個十六進制字符，一個字符代表4bits)
+> * Git將Hash值的前兩個字元作為檔案夾名稱，而Hash值是由十六進位組成，所以256來自於 16x16排列組合
+> * SHA-1 每個輸出位元幾乎獨立且等概率，因此保證了檔案平均分散
+> 
+> so, Git 透過巧妙的檔名設計，做到更好的檔案存取效能，又確保資料完整性！
 
 
 ### 細部觀察Git init：
@@ -21,7 +43,7 @@ hooks
 .git/objects/info
 .git/objects/pack
 ```
-* 當cd進info後，可以看到**exclude**檔案，原本以為這就是.gitignore的運作來源，但居然不是，exclude跟.gitignore是獨立的忽略機制，他們有優先序區分，而優先序是依照 git add指令->.gitignore->exclude
+- 當cd進info後，可以看到**exclude**檔案，原本以為這就是.gitignore的運作來源，但居然不是，exclude跟.gitignore是獨立的忽略機制，他們有優先序區分，而優先序是依照 git add指令->.gitignore->exclude
         - `exclude` 本地層級的忽略規則，只影響當前使用者的開發環境
         - `.gitignore` 專案層級的忽略規則，所有協作者共享
 因為.gitignore的原則是所有協作者共同**要**忽略的文件，所以有時候當有些本地測試檔案不應該被版本控制或共享給其他人時，就可以透過手動修改exclude檔案來實現
@@ -82,6 +104,17 @@ commit style是為了進一步提升協作溝通以及程式碼維護上的效�
 ## 一些額外學習到的紀錄
 
 * git cat-file -p ${文件的hash值} -> 印出檔案內容
-* .gitignore 
+* git cat-file blob <hash>
+* git hash-object <file> -w
+- .gitignore 
         - 如果檔案已被追蹤，即使添加到 .gitignore 中也不會被忽略。可使用 git rm --cached <file> 解決。
         - 衝突規則：優先應用**最靠近**檔案的規則
+
+
+
+## Git 是如何實現更佳version control的？
+Git 是一個 Content addressable file system (key-value store)
+- 透過Sha1 hash檔案內容後產生的就是unique Key (160 bits)
+        - 所以相同的檔案內容，相同的Key
+- 檔案內容還會經過zlib lib壓縮，近一步節省空間
+- 由於所有的 blob 物件都是透過「內容」來做定址的 (content addressable)，因此，若在不同版本之間找尋相同的內容，效率是非常高的。
