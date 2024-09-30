@@ -14,13 +14,28 @@ $ npm i --save-dev ...
 
 ## package.json 中的 scripts 這個區塊怎麼用？
 
-scripts區塊用於自定義可以透過npm run ...來執行的腳本指令，可以很大程度的方便開發協作，要讓整個應用運作起可能涵蓋了部署、啟動等等的行為，而在scripts自定義好這些指令後，一坨指令就可以省略！
+scripts區塊用於自定義可以透過npm run ...來執行的腳本指令，可以很大程度的方便開發協作。
+
+要讓整個應用運作起可能涵蓋了部署、啟動等等的行為，而在scripts自定義好這些指令後，一坨指令就可以省略！
 - start,test 字眼可以直接npm 接，不需要run
 
 
 ## Port number 要怎麼以環境變數來設定？
 
-要取得NodeJS runtime的環境變數，要透過**process.env**.xxx，但是大部分我們在開發的時候，應用程式需要用到的env我們都會用一個.env file去存取，所以要讓NodeJS runtime能讀到開發者想要到env必須要有個橋樑，那最常見的方式就是透過「dotenv」套件。
+要取得NodeJS runtime的環境變數，要透過**process.env**.xxx，但是大部分我們在開發的時候，應用程式需要用到的env我們都會用一個.env file去存取，所以要讓NodeJS runtime能取得開發者想要到env必須要有個橋樑，那最常見的方式就是透過「dotenv」套件，他會將我們指定的.env file中的環境變數注入到NodeJS process.env中。
+
+可以透過以下小實驗看出dotenv注入前後差別
+```js
+console.log('All Environment Variables:', process.env);
+require('dotenv').config();
+console.log('All Environment Variables:', process.env);
+```
+
+> [!NOTE]
+> 其他注入env的場景：
+> * Dockerfile 中的 ENV 參數、Docker compose 中的 environment / env_file屬性都是直接將變數注入到 process.env 中，所不需要使用 dotenv 套件
+> * 一些好用的第三方管理env工具也都是直接注入進環境中，也不需要使用 dotenv 套件，比如：infisical(我覺得真滴方便)
+
 
 
 ## 哪些檔案應該要被放上 github repo 哪些不?
@@ -62,8 +77,6 @@ async function () {
   // ...
 };
 ```
-
-
 
 ### EJS
 
