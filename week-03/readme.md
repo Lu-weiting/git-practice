@@ -23,6 +23,7 @@
 > 那為什麼有了VPC可以更加安全呢？（VPC/VPN 尚須深入研究）
 > 目前了解：未進入此虛擬網路的裝置是無法存取VPC內的任何資源 ex: ssh近主機之類的
 
+
 ## 如何抉擇適合的Region?
 
 我認爲最主要的點就是「系統需求」，如果需求是目標客戶的請求響應速度，那就是挑物理距離與目標客戶最近的Region，盡可能簡短資源傳輸距離來做到減少網絡延遲（latency）
@@ -30,3 +31,6 @@
 同樣的服務，比如：EC2,S3...，在不同Region的收費的收費定價不同（地區的土地、電力、冷卻等基礎設施都會反映在價格上），所以需要省錢的可以再決定前好好研究不同區域服務的定價差別
 
 
+## Ref
+- [AWS - Region and Zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions)
+- [30天鐵人賽介紹 AWS 雲端世界](https://ithelp.ithome.com.tw/m/articles/10192075)
