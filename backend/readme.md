@@ -105,5 +105,3 @@ const require = createRequire(import.meta.url);
 
 const pkg = require('pkg-commonjs');
 ```
-
-
