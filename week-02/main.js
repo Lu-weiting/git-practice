@@ -5,23 +5,33 @@ import Stack from './stack.js';
 let stack = new Stack();
 stack.print();
 
-stack.push(5);
-stack.push(8);
-stack.print();
-// 看看慢來的8有沒有消失
-stack.pop();
-stack.print();
-// 看看新來的2有沒有在array head
+// 先測試 push 正確性 （往開頭加
+stack.push(1);
 stack.push(2);
 stack.print();
-// 看看是不是新來的2正確print出
-stack.peek();
-console.log(stack.isEmpty());
-console.log(stack.size());
-stack.clear();
+
+// 測試 pop 正確性（stack空時pop
+console.log(stack.pop());
 stack.print();
+console.log(stack.pop());
+try {
+  stack.pop();
+} catch (error) {
+  console.error(error);
+}
+// 測試 peek 正確性
 console.log(stack.isEmpty());
+stack.peek();
+stack.push(3);
+stack.push(4);
+stack.peek();
 
-
-// stack.pop();
-// stack.peek();
+// 其他值測試
+stack.clear();
+stack.push(undefined);
+stack.push(null);
+stack.push('');
+stack.push(0);
+stack.print()
+console.log("size: ",stack.size());
+stack.peek();

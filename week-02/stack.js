@@ -11,24 +11,20 @@ export default class Stack {
 
   // 在 stack 頂部加入元素i
   push(element) {
-    // TODO
-    this.#items.unshift(element);
+    return this.#items.unshift(element);
   }
 
   // 移除並回傳 stack 頂部的元素
   pop() {
-    if (this.#items.length === 0) {
-      console.log("stack is empty");
-      return;
+    if (this.isEmpty()) {
+      throw new Error("stack is empty");
     }
-    this.#items.shift();
+    return this.#items.shift();
   }
 
   // 回傳 stack 頂部的元素，但不移除它
   peek() {
-    // stack是空的時候若不判斷會回傳undefined
-    if (this.#items.length === 0) {
-      console.log("stack is empty");
+    if (this.isEmpty()) {
       return;
     }
     console.log(this.#items[0]);
@@ -36,27 +32,22 @@ export default class Stack {
 
   // 檢查 stack 是否為空
   isEmpty() {
-    // TODO
     return this.#items.length === 0;
   }
 
   // 回傳 stack 中元素的個數
   size() {
-    // TODO
     return this.#items.length;
   }
 
   // 清空 stack
   clear() {
-    // TODO
     this.#items = [];
   }
 
   // 印出 stack 內容
   print() {
-    // TODO
-    if (this.#items.length === 0) {
-      console.log("stack is empty");
+    if (this.isEmpty()) {
       return;
     }
     console.log(...this.#items);

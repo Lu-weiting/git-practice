@@ -1,5 +1,9 @@
 function fib(n) {
-  // TODO: implement fibonacci
+
+  if (n < 2) {
+    console.log(n);
+    return;
+  }
   let f1 = 0;
   let f2 = 1;
   let f3 = 0;
@@ -8,7 +12,6 @@ function fib(n) {
     f3 = f1 + f2;
     f1 = f2;
     f2 = f3;
-    f3 = 0;
   }
   console.log(f1+f2)
 }
