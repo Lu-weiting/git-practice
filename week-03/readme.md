@@ -6,7 +6,7 @@
 由 Bottom-up 的方式來看的話，多個 Data Center 會組成一個 AZ（可用區域），而多個 AZ 會組成一個 Region，而Region 就是一個地理區域，比如：美國東部、歐洲、亞太 （[現有的Region](https://aws.amazon.com/about-aws/global-infrastructure/regions_az/?nc1=h_ls)）
 
 
-![aws-region](./aws-region.png)
+![aws-region](./img/aws-region.png)
 
 這樣的設計就像是多層式的防止單點失效，極大程度確保服務不間斷，儘管某個Data Center掛了其他Data Center也能馬上遞補，某個AZ掛了其他AZ遞補（Multiple AZs）
 > If you distribute your instances across multiple **Availability Zones** and one instance fails, you can design your application so that an instance in another Availability Zone can handle requests
