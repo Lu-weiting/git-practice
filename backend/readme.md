@@ -105,3 +105,8 @@ const require = createRequire(import.meta.url);
 
 const pkg = require('pkg-commonjs');
 ```
+
+
+## Ref
+- [Dcard工程師談](https://medium.com/dcardlab/一篇文搞清楚-node-js-模組行為-自由運用-commonjs-與-esm-模組-5f1e393276ba)
+- 
