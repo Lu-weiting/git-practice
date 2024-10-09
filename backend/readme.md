@@ -14,10 +14,21 @@ $ npm i --save-dev ...
 
 ## package.json 中的 scripts 這個區塊怎麼用？
 
-scripts區塊用於自定義可以透過npm run ...來執行的腳本指令，可以很大程度的方便開發協作。
+scripts區塊用於自定義可以透過 npm run ...來執行的腳本指令，可以很大程度的方便開發協作。
 
 要讓整個應用運作起可能涵蓋了部署、啟動等等的行為，而在scripts自定義好這些指令後，一坨指令就可以省略！
-- start,test 字眼可以直接npm 接，不需要run
+
+就像是下面這個例子，光是要啟動一個應用程式的一些必備服務 ex: DB, Redis... 就要打一長串指令了（如果像以下用 docker compose 一口氣將所有需要的服務都起起來那還方便挺多，但沒有的話甚至要記住每個服務啟動的指令分別執行，儘管記性好，也容易出錯），除此之外，啟動指令可能還需要區分不同環境的檔案路徑，像是要用 dev 的 docker compose 還是 prod 的 docker compose ? .env.dev 還是 .env.prod ？且如果他們都位在檔案結構很裡面的位置的話，光是要打出正確位置就佔用了 CLI 兩三行都有可能 xd!
+
+```js
+scripts: {
+  "dev:setenv": "docker compose -f ./docker-compose-dev.yml --env-file ./.env.dev up -d --build",
+  "dev:run": "nodemon --exec node --enable-source-maps --no-warnings=ExperimentalWarning --loader ts-node/esm --env-file=./.env.dev ./src/app.ts",
+}
+```
+
+> [!NOTE]
+> start,test 字眼可以直接 npm 接，不需要 run
 
 
 ## Port number 要怎麼以環境變數來設定？
@@ -47,6 +58,63 @@ console.log('All Environment Variables:', process.env);
         - 應該要排除可以「重建」的檔案，避免 Repo 肥大。比如：node_modules
 - 團隊協作：
         - 開發偏好每個人都不同，所以開發偏好設定的檔案不應該被放上 Repo（會被同事罵xd，比如：.vscode/
+
+
+> .env 檔案不上傳到 github 是正確的，那要怎麼讓團隊夥伴或新進同事知道這個專案有哪些設定？
+
+這個問題就是「團隊協作時，如何同步彼此的 env 」，我想到有兩種方式：
+1. 明確規定 rule ，當新增、更新 env 檔時，要在 .env_example 做紀錄，並通知一下 PM 之類的
+2. 使用現成的第三方 Secret Manager 工具 ex: AWS Secrets Manager、Infisical ...
+
+我偏向第二種，因為這些工具除了權限管理外，還可以很輕鬆整合管理不同環境所需要的變數，而且有種集中式管理的感覺，不容易 A 成員修改但沒人知道，於是其他人都壞掉。反過來看第一種，除了每個人本地都要維護一份甚至多份 env file 外，可能每次開發都需要確保說 env 有沒有更新等等的問題。
+
+除此之外，對於新進的團隊成員來說，第二種方式也比較友善，只是可能需要習慣第三方 Secret Manager 的 GUI介面而已。
+
+
+
+> 「開發偏好每個人都不同」 => 那如果想要達成團隊一致的 coding style 呢？
+
+我的想法是可以透過兩個面向實現一致的 coding style：
+1. 使用工具
+2. 團隊溝通 / 規範設定
+
+工具最常見的就是這幾種：eslint, prettier, husky ...，但這些工具主要的幫助是讓所有團隊成員都能輕鬆的有著一致的排版而已。如果要是更深層 coding style 像是模組化方式、分層方式等等，就必須要在開發之前向所有團隊成員達成一致共識，通常也需要留下係統 Spec 讓新進成員也能夠有跡可循。
+
+然後其實達成一致共識後，人的惰性往往都會不小心沒遵從到規範，所以才需要所謂的 code review，減少 code base 走歪的可能性。
+
+而達成一致共識這件事情常常會引發許多（爭）吵（論）架 xd ex: 這個資料夾有必要嗎？會不會over-designed? 等等。雖然這樣的爭論過程滿有趣的，可以引發很多不同看法的設計。但如果真的已經吵起來了的話，我覺得最好的辦法就是直接拿「業界常用」「成功標準」用 ex: DDD, Clean Architecture...
+
+
+## package-lock.json 用途是什麼？需要放上 github 嗎？為什麼？
+
+### package-lock.json 用途是什麼？
+
+當 npm install 時，npm 會依據 package.json 標記的 Semantic Versioning 套件進行安裝，而每個套件本身通常也會去依賴其他套件，這樣層層依賴的關係是很複雜的，因此 package-lock.json 就是用於記錄這些事情。
+
+且 npm install 的過程會先從 Registry 取得套件下載資訊(URL...)：因為我們需要的套件通常也都會去依賴別的套件，所以 npm 會相對應的 Registry 取得各個套件的 package.json，以及解析出下載 URL，然後再彙整出所有套件對應確切的下載版本，組成 package-lock.json。
+
+所以 npm 可以直接根據 package-lock.json 進行安裝，無需再次解析版本範圍等等的資訊，提升安裝速度
+
+
+### 需要放上 github 嗎？為什麼？
+
+我覺得要！兩個方面的理由：
+
+**開發面**
+- 放上 github 的主要理由是確保所有開發人員都是使用同一套套件版本，避免因版本差異導致「你電腦跑得動，我卻跑不動」的問題。
+
+**生產面**
+- 應該要確保開發用的套件跟生產用的套件要是一致的，如果生產部署時只有 package.json 而沒有 package-lock.json，那 npm install 可能會安裝到與本地開發不同版本的套件，比如以下用範圍定義的套件版本時，可能就剛好生產部署前這個套件更新到了 4.17.11 之類的，那 npm i 時就會重新生成一個最新的 lock file
+```js
+{
+  "dependencies": {
+    "lodash": "^4.17.0"
+  }
+}
+```
+
+> [!NOTE]
+> 生產環境的部署通常都會使用 npm ci 這專門的工具，而這工具就是透過針對依據 package-lock.json 進行套件版本安裝，來解決開發生產環境套件不同步的問題
 
 
 ## 範例程式中用 require，但上週的 Stack 是用 import/export，這兩種分別是 JavaScript 引用模組的兩種方式: CJS vs ESM，這兩者分別怎麼用？
