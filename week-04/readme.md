@@ -161,7 +161,7 @@ sudo tail -f /var/log/nginx/error.log
 -----------
 
 10. 
-- 靜態資源（如圖片、CSS、JavaScript）的處理非常高效，為什麼能高效？（待研究
+- Nginx 可以將靜態資源（如圖片、CSS、JavaScript）處理的非常高效，為什麼能高效？跟不使用 Nginx 來處理的差別？（待研究
 - Nginx 怎麼做到緩存的？（待研究
 
 -----------
