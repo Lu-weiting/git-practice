@@ -113,7 +113,7 @@ ubuntu : ubuntu sudo audio dip video plugdev netdev lxd
 1. 安裝的東西不小心安裝到 `/usr`去了（比如：安裝 NodeJS 不透過 nvm 而是透過 apt 安裝的話就會）
 2. 有些特別的文件可能本身不需要用到 root 但是還是有高一些的權限限制，可以透過 `ls -l` 查看
 
-[!NOTE]
+![NOTE]
 > * nvm 將 Node.js 和 npm 安裝在你的用戶目錄下（通常是 ~/.nvm），而不是系統的全局目錄（如 /usr/local）。這意味著所有的操作（包括安裝全局套件）都是在用戶權限下進行的，不需要提升到 root 權限。
 
 
