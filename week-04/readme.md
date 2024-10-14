@@ -1,20 +1,22 @@
 
-1. public ip: 52.197.206.120
-2. 什麼是 instance type?
+1. **public ip: 52.197.206.120**
+
+2. **什麼是 instance type?**
 
 instance type 就是指電腦的規格（記憶體、運算能力等等），命名方式通常是依據種類、資源大小
 > Each instance type offers different compute, memory, and storage capabilities, and is grouped in an instance family based on these capabilities --[aws](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)
+
 > Instance types are named based on their instance family and instance size. The first position of the instance family indicates the series, for example c. The second position indicates the generation, for example 7. The third position indicates the options, for example gn. After the period (.) is the instance size, such as small or 4xlarge, or metal for bare metal instances. --[aws](https://docs.aws.amazon.com/ec2/latest/instancetypes/instance-type-names.html)
 
 
-3. 什麼是 Nginx？有哪些用途與特性？
+3. **什麼是 Nginx？有哪些用途與特性？**
 
 Nginx 主要扮演這兩個角色：Web server（網頁伺服器）、Reverse Proxy（反向代理伺服器），除此之外還提供一堆功能，像是：
 - 負載均衡器（Load Balancer）：可以根據不同的負載均衡算法（Round Robin 之類的），將流量均勻分配到多個後端伺服器
 - HTTP 緩存（HTTP Caching）：請求優先進到這邊，所以極大程度的提升請求響應速度
 - API Gateway：可以去控制訪問權等等
 
-5. proxy 是什麼意思？為什麼要透過 Nginx 來 proxy 到 Express 開發的 Web Server?
+5. **proxy 是什麼意思？為什麼要透過 Nginx 來 proxy 到 Express 開發的 Web Server?**
 
 代理（Proxy） 是一種中介服務器，位於客戶端和目標服務器之間，負責轉發客戶端的請求並將目標服務器的響應返回給客戶端。
 proxy 的運作分成正反向：
@@ -31,7 +33,7 @@ proxy 的運作分成正反向：
 - Nginx 可以緩存後端服務器的響應內容，減少後端的負載，提高響應速度。
 
 
-4. pm2 套件是什麼？有什麼用處？
+4. **pm2 套件是什麼？有什麼用處？**
 
 一個在生產(production)環境非常方便的「進程管理器」，通常在生產環境中可能會需要同時間運行多個伺服器，且這些伺服器必須要時時保持連線狀態。而 PM2 就是個能解決以上需求的強大工具，除了背景運行外、管理、監控和維護都能夠透過 PM2 變得簡單容易。下面簡潔整理了一下 PM2 能做到的事情：
 
@@ -40,7 +42,7 @@ proxy 的運作分成正反向：
 - 日誌管理/性能監控：集中管理日誌、實時顯示 CPU、內存使用情況
 
 
-6. Nginx 設定檔
+6. **Nginx 設定檔**
 ```
 server {
     listen 80;
@@ -62,7 +64,7 @@ server {
 }
 ```
 
-7. Security Group 是什麼？用途為何？有什麼設定原則嗎？
+7. **Security Group 是什麼？用途為何？有什麼設定原則嗎？**
 
 ### Security Group 是什麼？用途為何？
 
@@ -80,7 +82,7 @@ server {
 2. 分層設計：比較常見的是分成資料庫層、應用程式層 -> 讓資料庫的存取流量只能來自於應用程式層
 
 
-8. 什麼是 sudo? 為什麼有的時候需要加上 sudo，有時候不用？
+8. **什麼是 sudo? 為什麼有的時候需要加上 sudo，有時候不用？**
 
 sudo 的原文是「Super User DO」，如字面上意思，以權限開最大的用戶（管理者）做某件事情。在 Linux 系統中，root 就是一個也是唯一一個 Super User，他可以做任何事情。而 sudo 本身就是一個程式，當使用 sudo 後面接著一個指令時，會進行以下流程：
 - 權限驗證：去到 /etc/sudoers 文件或是 /etc/sudoers.d 檔案夾底下查看當前用戶對於當前的指令是否有使用 sudo 的權限
@@ -123,7 +125,7 @@ ubuntu : ubuntu sudo audio dip video plugdev netdev lxd
 sudo 巨大的好處之一就是：讓一般使用者能「暫時」取得 root 權限並使用 root 使用者的權限執行所需的動作
 
 
-9. Nginx 的 Log 檔案在哪裡？你怎麼找到的？怎麼看 Nginx 的 Log？
+9. **Nginx 的 Log 檔案在哪裡？你怎麼找到的？怎麼看 Nginx 的 Log？**
 
 在大多數 Linux 發行版中所有的 log 都是默認放在 `/var/log/` 下，而當在主機安裝 nginx 後，`/var/log/` 就會多出一個 nginx 資料夾，其底下就是所有 nginx 的 log 檔案。
 
