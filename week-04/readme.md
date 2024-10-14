@@ -1,6 +1,9 @@
 
 1. **public ip: 52.197.206.120**
 
+
+------
+
 2. **什麼是 instance type?**
 
 instance type 就是指電腦的規格（記憶體、運算能力等等），命名方式通常是依據種類、資源大小
@@ -8,6 +11,8 @@ instance type 就是指電腦的規格（記憶體、運算能力等等），命
 
 > Instance types are named based on their instance family and instance size. The first position of the instance family indicates the series, for example c. The second position indicates the generation, for example 7. The third position indicates the options, for example gn. After the period (.) is the instance size, such as small or 4xlarge, or metal for bare metal instances. --[aws](https://docs.aws.amazon.com/ec2/latest/instancetypes/instance-type-names.html)
 
+
+--------
 
 3. **什麼是 Nginx？有哪些用途與特性？**
 
@@ -33,6 +38,8 @@ proxy 的運作分成正反向：
 - Nginx 可以緩存後端服務器的響應內容，減少後端的負載，提高響應速度。
 
 
+-----------
+
 4. **pm2 套件是什麼？有什麼用處？**
 
 一個在生產(production)環境非常方便的「進程管理器」，通常在生產環境中可能會需要同時間運行多個伺服器，且這些伺服器必須要時時保持連線狀態。而 PM2 就是個能解決以上需求的強大工具，除了背景運行外、管理、監控和維護都能夠透過 PM2 變得簡單容易。下面簡潔整理了一下 PM2 能做到的事情：
@@ -41,6 +48,7 @@ proxy 的運作分成正反向：
 - 負載均衡/集群模式：可以分配不同的進程跑在不同的 CPU 上
 - 日誌管理/性能監控：集中管理日誌、實時顯示 CPU、內存使用情況
 
+-----------
 
 6. **Nginx 設定檔**
 ```
@@ -63,6 +71,8 @@ server {
     }
 }
 ```
+
+-----------
 
 7. **Security Group 是什麼？用途為何？有什麼設定原則嗎？**
 
@@ -126,6 +136,8 @@ ubuntu : ubuntu sudo audio dip video plugdev netdev lxd
 sudo 巨大的好處之一就是：讓一般使用者能「暫時」取得 root 權限並使用 root 使用者的權限執行所需的動作
 
 
+-----------
+
 9. **Nginx 的 Log 檔案在哪裡？你怎麼找到的？怎麼看 Nginx 的 Log？**
 
 在大多數 Linux 發行版中所有的 log 都是默認放在 `/var/log/` 下，而當在主機安裝 nginx 後，`/var/log/` 就會多出一個 nginx 資料夾，其底下就是所有 nginx 的 log 檔案。
@@ -146,11 +158,13 @@ sudo tail -f /var/log/nginx/error.log
 ```
 * 不需要實時，長篇分析歷史紀錄，那就可以用 `cat/more/less` 等工具
 
-
+-----------
 
 10. 
 - 靜態資源（如圖片、CSS、JavaScript）的處理非常高效，為什麼能高效？（待研究
 - Nginx 怎麼做到緩存的？（待研究
+
+-----------
 
 11. Ref:
 - [aws-instance-type](https://docs.aws.amazon.com/zh_tw/AWSEC2/latest/UserGuide/instance-types.html)
