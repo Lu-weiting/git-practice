@@ -173,3 +173,16 @@ sudo tail -f /var/log/nginx/error.log
 - [aws-instance-naming](https://docs.aws.amazon.com/ec2/latest/instancetypes/instance-type-names.html)
 - [管理本地端主機之使用者與群組](https://ithelp.ithome.com.tw/articles/10270945?sc=hot)
 - [科技讀蟲](https://yhtechnote.com/linux-sudo/)
+
+
+#### 其他紀錄：
+
+**`$PATH`是啥**
+方便使用者下指令，不需要去找到對應指令在 Linux 的真正可執行檔案的位置才能下指令， `$PATH` 幫你找了。
+
+下面這個顯示當前目錄下 Shell 會如何按照顺序搜尋可執行檔案的位置，換句話說：以下列出的path裡的可執行檔都是當前目錄下下指令時可以省略掉真實位置的
+```bash
+ubuntu@ip-172-31-40-129:/$ echo $PATH
+/home/ubuntu/.nvm/versions/node/v20.18.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+```
+除了內建的可執行檔案外，也可將自定義的腳本放入 `/usr/local` 比如：`/usr/local/hello.sh`，這樣無論在哪只要`PATH`找得到`/usr/local`，就可以直接在當前 shell 下 hello.sh 就好。
