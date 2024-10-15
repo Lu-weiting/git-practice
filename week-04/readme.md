@@ -20,6 +20,8 @@ Nginx 主要扮演這兩個角色：Web server（網頁伺服器）、Reverse Pr
 - 負載均衡器（Load Balancer）：可以根據不同的負載均衡算法（Round Robin 之類的），將流量均勻分配到多個後端伺服器
 - HTTP 緩存（HTTP Caching）：請求優先進到這邊，所以極大程度的提升請求響應速度
 - API Gateway：可以去控制訪問權等等
+- Encryption：支持最新的 SSL/TLS 協議和加密技術，保障數據傳輸的安全
+
 
 5. **proxy 是什麼意思？為什麼要透過 Nginx 來 proxy 到 Express 開發的 Web Server?**
 
