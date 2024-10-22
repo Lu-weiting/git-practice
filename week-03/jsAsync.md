@@ -3,7 +3,7 @@
 ## 前言
 
 大家都知道運行 JS 的 runtime 有兩種：NodeJS、瀏覽器。
-以下 JS 底層運作學習記錄的視角是以瀏覽器為主，但其實說到如何**解決 Single-threaded 單線程的限制的**背後核心運作流程概念都是雷同的就差在運行環境、實現方式不同。理解了瀏覽器後就能理解 NodeJS 是如何做到的。
+以下 JS 底層運作學習記錄的視角是以**瀏覽器**為主，但其實說到如何**解決 Single-threaded 單線程的限制的**背後核心運作流程概念都是雷同的就差在運行環境、實現方式不同。理解了瀏覽器後就能理解 NodeJS 是如何做到的。
 
 先草草帶過以後有機會再研究：NodeJS 無論是 Web APIs、Event loop..等等機制的實現方式都是透過 [libuv](https://github.com/libuv/libuv) 這一個library。
 
